@@ -1,7 +1,13 @@
 :80 {
     browse
     root /opt/icecult
-    proxy /rpc localhost:3121
+    gzip
+    log stdout
+}
+
+:1080 {
+    browse
+    root /opt/eiskaltdcpp-web
     gzip
     log stdout
 }
