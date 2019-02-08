@@ -1,4 +1,4 @@
-FROM kraiz/icecold
+FROM bjcamp95/eiskaltdcpp-mutli-webui
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     uhub \ 
