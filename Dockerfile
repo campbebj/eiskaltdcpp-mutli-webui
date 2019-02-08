@@ -16,6 +16,9 @@ RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | t
 RUN mkdir -p /tmp/eiskaltdcpp-master/builddir
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && cmake -DCMAKE_BUILD_TYPE=Release \
+          -DLUA_SCRIPT=OFF \
+          -DUSE_MINIUPNP=OFF \
+          -DPERL_REGEX=OFF \
           -DNO_UI_DAEMON=ON \
           -DJSONRPC_DAEMON=ON \
           -DLOCAL_JSONCPP=ON \
@@ -48,7 +51,7 @@ COPY --from=builder /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltd
                     /bin/caddy \
                     /bin/
 COPY --from=builder /tmp/icecult-master/app /opt/icecult
-COPY --from=builder /tmp/eiskaltdcpp-web /opt/eiskaltdcpp-web
+COPY --from=builder /tmp/eiskaltdcpp-web-master /opt/eiskaltdcpp-web
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
