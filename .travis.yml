@@ -11,5 +11,5 @@ services:
   - docker
 
 install:
-  - docker build -t kraiz/icecold:latest .
-  - docker build -t kraiz/icecold:server -f Dockerfile.server .
+  - docker build -t bjcamp95/eiskaltdcpp-mutli-webui:latest .
+  - docker build -t bjcamp95/eiskaltdcpp-mutli-webui:server -f Dockerfile.server .
