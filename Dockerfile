@@ -11,11 +11,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl-dev \
     pkg-config
 
-# peervpn
-RUN curl -L https://github.com/peervpn/peervpn/archive/master.tar.gz | tar xz -C /tmp
-RUN cd /tmp/peervpn-master \
- && make
-
 # eiskaltdcpp
 RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp/archive/master.tar.gz | tar xz -C /tmp
 RUN mkdir -p /tmp/eiskaltdcpp-master/builddir
@@ -33,8 +28,11 @@ RUN cd /tmp/eiskaltdcpp-master/builddir \
           ..
 RUN cd /tmp/eiskaltdcpp-master/builddir \
  && make
+ 
+ 
 
 # icecult + webserver
+RUN curl -L https://github.com/eiskaltdcpp/eiskaltdcpp-web/archive/master.tar.gz | tar xz -C /tmp
 RUN curl -L https://github.com/kraiz/icecult/archive/master.tar.gz | tar xz -C /tmp
 RUN curl -L https://caddyserver.com/download/linux/amd64?license=personal | tar xz -C /bin
 # forego - process manager
@@ -45,12 +43,12 @@ RUN curl https://bin.equinox.io/c/ekMN3bCZFUn/forego-stable-linux-amd64.tgz | ta
 # production image:
 # -----------------------------------------------------------------------------
 FROM debian:jessie-slim
-COPY --from=builder /tmp/peervpn-master/peervpn \
-                    /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon \
+COPY --from=builder /tmp/eiskaltdcpp-master/builddir/eiskaltdcpp-daemon/eiskaltdcpp-daemon \
                     /bin/forego \
                     /bin/caddy \
                     /bin/
 COPY --from=builder /tmp/icecult-master/app /opt/icecult
+COPY --from=builder /tmp/eiskaltdcpp-web /opt/eiskaltdcpp-web
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
@@ -60,6 +58,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ADD ./Procfile /
 ADD ./Caddyfile /
 
-EXPOSE 80/tcp 7000/udp
+EXPOSE 80/tcp 7000/udp 1080/tcp
 
 CMD ["/bin/forego", "start"]
