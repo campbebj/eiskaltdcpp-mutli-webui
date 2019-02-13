@@ -1,4 +1,4 @@
-# eiskaltdcpp-mutli-webui
+# icecold-peered
 docker image with eiskaltdcpp daemon and icecult web client
 
 # command
