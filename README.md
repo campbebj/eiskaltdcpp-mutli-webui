@@ -1,5 +1,5 @@
 # eiskaltdcpp-mutli-webui
-docker image with eiskaltdcpp daemon and both webui clients
+docker image with eiskaltdcpp daemon and icecult web client
 
 # command
 
@@ -10,14 +10,14 @@ docker run --rm
  -v /path/to/downloads:/opt/downloads
  -v /path/to/share1:/opt/share/share1
  -v /path/to/stuff:/opt/share/stuff
+ -p 7000:7000/udp
  -p 9999:80
- -p 9998:1080
-   bjcamp95/eiskaltdcpp-mutli-webui
+   bjcamp95/icecold
 ```
 
 # ports
+* `7000` is the vpn port, forward traffic from your route here
 * `80` is the webinterface for icecold to open in browser
-* `1080` is the webinterface for the old webui to open in browser
 
 # volumes
 * `/opt/eiskalt/`, config and temp data folder. Add 2 files manually before starting:
